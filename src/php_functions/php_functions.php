@@ -1,14 +1,79 @@
 <?php
-	function index_navbar_session_isset() {
-		echo '<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
-        echo '<img src="../assets/user.png" width="30" height="30" class="d-inline-block align-top" alt=""> Username</a>';
-        echo '<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">';
-        echo '<a class="dropdown-item" href="#">Go to the dashboard</a>';
-        echo '<a class="dropdown-item" href="#">Log out</a>';
-        echo '</div>';
-	}
+  function get_server_information() {
+    return "localhost";
+  }
 
-    function index_navbar_session_not_set() {
-		echo '<a class="nav-link" href="#"> Log in or create an account</a>';
-	}
+  function get_database_name() {
+    return "yet_another_task_manager";
+  }
+
+  function get_database_user_name() {
+    return "yatm_user";
+  }
+
+  function get_database_user_password() {
+    return "this_is_a_secure_password";
+  }
+
+  function does_user_already_exist($user) {
+    session_start();
+    $_SESSION['cant_connect_to_database'] = null;
+
+    try {
+      $database_connection = new PDO('mysql:host='.get_server_information().';dbname='.get_database_name().'', ''.get_database_user_name().'', ''.get_database_user_password().'', 
+      array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+    }
+    catch(PDOException $exception) {
+      session_start();
+      $_SESSION['cant_connect_to_database'] = true;
+      $exception->getMessage();
+    }
+
+    $counter = 0;
+
+    foreach($database_connection->query('select * from users') as $row) {
+      if($row['users_username'] == $user){
+        $counter++;
+      }
+    }
+
+    if($counter > 0) {
+      return true;
+    }
+    else {
+      return false;
+    }
+
+  }
+
+  function is_email_already_in_use($email) {
+    session_start();
+    $_SESSION['cant_connect_to_database'] = null;
+
+    try {
+      $database_connection = new PDO('mysql:host='.get_server_information().';dbname='.get_database_name().'', ''.get_database_user_name().'', ''.get_database_user_password().'', 
+      array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+    }
+    catch(PDOException $exception) {
+      $_SESSION['cant_connect_to_database'] = true;
+      $exception->getMessage();
+    }
+
+    $counter = 0;
+
+    foreach($database_connection->query('select * from users') as $row) {
+      if($row['users_email'] == $email){
+        $counter++;
+      }
+    }
+
+    if($counter > 0) {
+      return true;
+    }
+    else {
+      return false;
+    }
+
+  }
+
 ?>

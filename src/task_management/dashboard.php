@@ -3,7 +3,7 @@
 
 <head>
 	<title>Yet another task manager</title>
-    <link rel="icon" href="../assets/list.png">
+    <link rel="icon" href="../../assets/list.png">
 
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -19,7 +19,7 @@
 </head>
 
 <?php
-	include './php_functions/php_functions.php'
+	include './php_functions/php_functions.php';
 ?>
 
 <body>
@@ -30,7 +30,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown">
-                <?php
+            <?php
                     session_start();
 
                     if(isset($_SESSION['active_session'])){
@@ -44,8 +44,8 @@
                     else {
                         echo '<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Log in or create an account</a>';
                         echo '<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">';
-                        echo '<a class="dropdown-item" href="./user_management/login.php">Log in</a>';
-                        echo '<a class="dropdown-item" href="./user_management/create_account.php">Create account</a>';
+                        echo '<a class="dropdown-item" href="../user_management/login.php">Log in</a>';
+                        echo '<a class="dropdown-item" href="../user_management/create_account.php">Create account</a>';
                         echo '</div>';
 
                         //session_destroy();
@@ -61,7 +61,7 @@
 
     <!-- Begin page content -->
     <main role="main" class="container">
-        <h1 class="mt-5">Yet another task manager</h1>
+        <h1 class="mt-5">Dashboard</h1>
         <p class="lead"><a href="./user_management/login.php">Log in</a> or <a href="./user_management/create_account.php">create a new account</a> to use this application.</p>
     </main>
 

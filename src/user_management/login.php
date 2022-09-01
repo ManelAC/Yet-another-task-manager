@@ -3,7 +3,7 @@
 
 <head>
 	<title>Yet another task manager</title>
-    <link rel="icon" href="../assets/list.png">
+    <link rel="icon" href="../../assets/list.png">
 
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -19,18 +19,18 @@
 </head>
 
 <?php
-	include './php_functions/php_functions.php'
+    include '../php_functions/php_functions.php';
 ?>
 
 <body>
     <header>
     <!-- Fixed navbar -->
     <nav class="navbar navbar-expand navbar-dark fixed-top bg-dark">
-    <a class="navbar-brand" href="#">YATM</a>
+    <a class="navbar-brand" href="../index.php">YATM</a>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown">
-                <?php
+            <?php
                     session_start();
 
                     if(isset($_SESSION['active_session'])){
@@ -44,25 +44,52 @@
                     else {
                         echo '<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Log in or create an account</a>';
                         echo '<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">';
-                        echo '<a class="dropdown-item" href="./user_management/login.php">Log in</a>';
-                        echo '<a class="dropdown-item" href="./user_management/create_account.php">Create account</a>';
+                        echo '<a class="dropdown-item" href="./login.php">Log in</a>';
+                        echo '<a class="dropdown-item" href="./create_account.php">Create account</a>';
                         echo '</div>';
 
                         //session_destroy();
                     }
-
                 ?>
             </li>
         </ul>
     </div>
-
     </nav>
     </header>
 
     <!-- Begin page content -->
     <main role="main" class="container">
-        <h1 class="mt-5">Yet another task manager</h1>
-        <p class="lead"><a href="./user_management/login.php">Log in</a> or <a href="./user_management/create_account.php">create a new account</a> to use this application.</p>
+        <h1 class="mt-5">Login</h1>
+
+        <?php
+            session_start();
+
+            if(isset($_SESSION["username_doesnt_exist"])) {
+                echo '<div class="alert alert-danger" role="alert">This username doesn\'t exist.</div>';
+            }
+            if(isset($_SESSION["wrong_password"])) {
+                echo '<div class="alert alert-danger" role="alert">Incorrect password.</div>';
+            }
+            if(isset($_SESSION['cant_connect_to_database'])) {
+                echo '<div class="alert alert-danger" role="alert">Can\'t connect to database. Please open an issue on the GitHub repository.</div>';
+            }
+
+            echo '<h1>'.$_SESSION['asdsdcsdfvsvbf'].'</h1>';
+
+            session_destroy();
+        ?>
+
+        <form action="./login_check.php" method="post">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" name="username" id="username" placeholder="Enter username" required autocomplete="on">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" name="password" id="password" placeholder="Enter password" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Log in</button>
+        </form>
     </main>
 
     <footer class="footer">
