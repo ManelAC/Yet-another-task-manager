@@ -24,7 +24,6 @@
       array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
     }
     catch(PDOException $exception) {
-      session_start();
       $_SESSION['cant_connect_to_database'] = true;
       $exception->getMessage();
     }

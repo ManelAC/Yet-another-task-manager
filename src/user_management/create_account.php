@@ -20,6 +20,12 @@
 
 <?php
     include '../php_functions/php_functions.php';
+
+    session_start();
+
+    if(isset($_SESSION['active_user'])) {
+        header("Location: ../task_management/dashboard.php");
+    }
 ?>
 
 <body>
@@ -30,26 +36,12 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown">
-            <?php
-                    session_start();
-
-                    if(isset($_SESSION['active_session'])){
-                        echo '<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
-                        echo '<img src="../assets/user.png" width="30" height="30" class="d-inline-block align-top" alt=""> Username</a>';
-                        echo '<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">';
-                        echo '<a class="dropdown-item" href="#">Go to the dashboard</a>';
-                        echo '<a class="dropdown-item" href="#">Log out</a>';
-                        echo '</div>';
-                    }
-                    else {
-                        echo '<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Log in or create an account</a>';
-                        echo '<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">';
-                        echo '<a class="dropdown-item" href="./login.php">Log in</a>';
-                        echo '<a class="dropdown-item" href="./create_account.php">Create account</a>';
-                        echo '</div>';
-
-                        //session_destroy();
-                    }
+                <?php
+                    echo '<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Log in or create an account</a>';
+                    echo '<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">';
+                    echo '<a class="dropdown-item" href="./login.php">Log in</a>';
+                    echo '<a class="dropdown-item" href="./create_account.php">Create account</a>';
+                    echo '</div>';
                 ?>
             </li>
         </ul>
@@ -85,7 +77,7 @@
             if(isset($_SESSION['account_successfully_created'])) {
                 echo '<div class="alert alert-success" role="alert">The account was succesfully created. You can <a href="./login.php" class="alert-link">log in</a> now.</div>';
             }
-            echo '<h1>'.$_SESSION['auxxx'].'</h1>';
+            
             session_destroy();
         ?>
 

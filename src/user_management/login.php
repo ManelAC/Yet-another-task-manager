@@ -20,6 +20,12 @@
 
 <?php
     include '../php_functions/php_functions.php';
+
+    session_start();
+
+    if(isset($_SESSION['active_user'])) {
+        header("Location: ../task_management/dashboard.php");
+    }
 ?>
 
 <body>
@@ -47,8 +53,6 @@
                         echo '<a class="dropdown-item" href="./login.php">Log in</a>';
                         echo '<a class="dropdown-item" href="./create_account.php">Create account</a>';
                         echo '</div>';
-
-                        //session_destroy();
                     }
                 ?>
             </li>
@@ -59,7 +63,7 @@
 
     <!-- Begin page content -->
     <main role="main" class="container">
-        <h1 class="mt-5">Login</h1>
+        <h1 class="mt-5">Log in</h1>
 
         <?php
             session_start();
@@ -74,15 +78,13 @@
                 echo '<div class="alert alert-danger" role="alert">Can\'t connect to database. Please open an issue on the GitHub repository.</div>';
             }
 
-            echo '<h1>'.$_SESSION['asdsdcsdfvsvbf'].'</h1>';
-
             session_destroy();
         ?>
 
         <form action="./login_check.php" method="post">
             <div class="form-group">
                 <label for="username">Username</label>
-                <input type="text" class="form-control" name="username" id="username" placeholder="Enter username" required autocomplete="on">
+                <input type="text" class="form-control" name="username" id="username" placeholder="Enter username" required autocomplete="on" value="<?php echo $_SESSION['used_username'] ?>">
             </div>
             <div class="form-group">
                 <label for="password">Password</label>

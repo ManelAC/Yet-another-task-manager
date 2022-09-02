@@ -3,6 +3,10 @@
 
     session_start();
 
+    if(isset($_SESSION['active_user'])) {
+        header("Location: ../task_management/dashboard.php");
+    }
+
     $_SESSION['account_successfully_created'] = null;
     $can_create_user = true;
 
@@ -54,7 +58,6 @@
             array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
         }
         catch(PDOException $exception) {
-            session_start();
             $_SESSION['cant_connect_to_database'] = true;
             $exception->getMessage();
         }

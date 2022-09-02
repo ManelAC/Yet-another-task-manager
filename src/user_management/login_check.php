@@ -3,16 +3,20 @@
 
     session_start();
 
+    if(isset($_SESSION['active_user'])) {
+        header("Location: ../task_management/dashboard.php");
+    }
+
     if(!does_user_already_exist($_POST['username'])) {
         $_SESSION['username_doesnt_exist'] = true;
+        $_SESSION['used_username'] = $_POST['username'];
 
         header("Location: ./login.php");
     }
     else {
         $_SESSION['username_doesnt_exist'] = null;
+        $_SESSION['used_username'] = $_POST['username'];
 
-
-        session_start();
         $_SESSION['cant_connect_to_database'] = null;
 
         try {

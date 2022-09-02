@@ -19,7 +19,9 @@
 </head>
 
 <?php
-	include './php_functions/php_functions.php'
+	include './php_functions/php_functions.php';
+
+    session_start();
 ?>
 
 <body>
@@ -31,14 +33,12 @@
         <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown">
                 <?php
-                    session_start();
-
-                    if(isset($_SESSION['active_session'])){
+                    if(isset($_SESSION['active_user'])){
                         echo '<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
-                        echo '<img src="../assets/user.png" width="30" height="30" class="d-inline-block align-top" alt=""> Username</a>';
+                        echo ''.$_SESSION['active_user'].' <img src="../assets/user.png" width="30" height="30" class="d-inline-block align-top" alt=""></a>';
                         echo '<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">';
-                        echo '<a class="dropdown-item" href="#">Go to the dashboard</a>';
-                        echo '<a class="dropdown-item" href="#">Log out</a>';
+                        echo '<a class="dropdown-item" href="./task_management/dashboard.php">Go to the dashboard</a>';
+                        echo '<a class="dropdown-item" href="./user_management/logout.php">Log out</a>';
                         echo '</div>';
                     }
                     else {
@@ -47,10 +47,7 @@
                         echo '<a class="dropdown-item" href="./user_management/login.php">Log in</a>';
                         echo '<a class="dropdown-item" href="./user_management/create_account.php">Create account</a>';
                         echo '</div>';
-
-                        //session_destroy();
                     }
-
                 ?>
             </li>
         </ul>
@@ -62,7 +59,19 @@
     <!-- Begin page content -->
     <main role="main" class="container">
         <h1 class="mt-5">Yet another task manager</h1>
-        <p class="lead"><a href="./user_management/login.php">Log in</a> or <a href="./user_management/create_account.php">create a new account</a> to use this application.</p>
+        <?php
+            if(isset($_SESSION['active_user'])){
+                echo '<p class="lead"><a href="./task_management/dashboard.php">Go to your dashboard, '.$_SESSION['active_user'].'.</a></p>';
+            }
+            else {
+                echo '<p class="lead"><a href="./user_management/login.php">Log in</a> or <a href="./user_management/create_account.php">create a new account</a> to use this application.</p>';
+            }
+        ?>
+        
+        <br>
+        <br>
+        <br>
+        <div class="alert alert-info" role="alert">This website uses cookies. By using it you accept that.</div>
     </main>
 
     <footer class="footer">

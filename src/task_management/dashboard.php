@@ -20,37 +20,29 @@
 
 <?php
 	include './php_functions/php_functions.php';
+
+    session_start();
+
+    if(!isset($_SESSION['active_user'])) {
+        header("Location: ../index.php");
+    }
 ?>
 
 <body>
     <header>
     <!-- Fixed navbar -->
     <nav class="navbar navbar-expand navbar-dark fixed-top bg-dark">
-    <a class="navbar-brand" href="#">YATM</a>
+    <a class="navbar-brand" href="../index.php">YATM</a>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown">
-            <?php
-                    session_start();
-
-                    if(isset($_SESSION['active_session'])){
-                        echo '<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
-                        echo '<img src="../assets/user.png" width="30" height="30" class="d-inline-block align-top" alt=""> Username</a>';
-                        echo '<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">';
-                        echo '<a class="dropdown-item" href="#">Go to the dashboard</a>';
-                        echo '<a class="dropdown-item" href="#">Log out</a>';
-                        echo '</div>';
-                    }
-                    else {
-                        echo '<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Log in or create an account</a>';
-                        echo '<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">';
-                        echo '<a class="dropdown-item" href="../user_management/login.php">Log in</a>';
-                        echo '<a class="dropdown-item" href="../user_management/create_account.php">Create account</a>';
-                        echo '</div>';
-
-                        //session_destroy();
-                    }
-
+                <?php
+                    echo '<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+                    echo ''.$_SESSION['active_user'].' <img src="../../assets/user.png" width="30" height="30" class="d-inline-block align-top" alt=""></a>';
+                    echo '<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">';
+                    echo '<a class="dropdown-item" href="./dashboard.php">Go to the dashboard</a>';
+                    echo '<a class="dropdown-item" href="../user_management/logout.php">Log out</a>';
+                    echo '</div>';
                 ?>
             </li>
         </ul>
@@ -62,7 +54,7 @@
     <!-- Begin page content -->
     <main role="main" class="container">
         <h1 class="mt-5">Dashboard</h1>
-        <p class="lead"><a href="./user_management/login.php">Log in</a> or <a href="./user_management/create_account.php">create a new account</a> to use this application.</p>
+        <p class="lead">Things go here.</p>
     </main>
 
     <footer class="footer">
