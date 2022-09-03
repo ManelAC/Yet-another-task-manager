@@ -67,8 +67,8 @@
         <div class="row">
             <div class="col-2">
                 <div class="row mt-3"><a class="btn btn-primary" href="./new_task.php" role="button">New task</a></div>
-                <div class="row mt-3"><a class="btn btn-primary" href="./task_list.php" role="button">Task list</a></div>
-                <div class="row mt-3"><a class="btn btn-primary" href="./done_tasks.php" role="button">Done tasks</a></div>
+                <div class="row mt-3"><a class="btn btn-primary" href="./pending_tasks.php" role="button">Pending tasks</a></div>
+                <div class="row mt-3"><a class="btn btn-primary" href="./finished_tasks.php" role="button">Finished tasks</a></div>
                 <div class="row mt-3"><a class="btn btn-primary" href="./Dashboard.php" role="button">Dashboard</a></div>
             </div>
             <div class="col-10">

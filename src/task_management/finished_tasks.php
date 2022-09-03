@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    
+
 	<!-- Bootstrap core CSS -->
 	<link rel="stylesheet" href="https://getbootstrap.com/docs/4.1/dist/css/bootstrap.min.css">
 	
@@ -19,7 +19,7 @@
 </head>
 
 <?php
-	include './php_functions/php_functions.php';
+    include '../php_functions/php_functions.php';
 
     session_start();
 
@@ -53,17 +53,66 @@
 
     <!-- Begin page content -->
     <main role="main" class="container">
-        <h1 class="mt-5">Dashboard</h1>
-        <br>
         <div class="row">
-            <div class="col-3">
-                <div class="row"><a class="btn btn-primary" href="./new_task.php" role="button">New task</a></div>
-                <div class="row"><a class="btn btn-primary" href="./task_list.php" role="button">Task list</a></div>
-                <div class="row"><a class="btn btn-primary" href="./done_tasks.php" role="button">Done tasks</a></div>
+            <div class="col-12">
+                <h1 class="mt-5 text-center">Finished tasks</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2">
+                <div class="row mt-3"><a class="btn btn-primary" href="./new_task.php" role="button">New task</a></div>
+                <div class="row mt-3"><a class="btn btn-primary" href="./pending_tasks.php" role="button">Pending tasks</a></div>
+                <div class="row mt-3"><a class="btn btn-primary" href="./finished_tasks.php" role="button">Finished tasks</a></div>
                 <div class="row mt-3"><a class="btn btn-primary" href="./Dashboard.php" role="button">Dashboard</a></div>
             </div>
-            <div class="col-9">
-                <div class="row"><h1 class="mt-5">Placeholder</h1></div>
+            <div class="col-10">
+                <?php
+                    session_start();
+                    $_SESSION['cant_connect_to_database'] = null;
+                
+                    try {
+                      $database_connection = new PDO('mysql:host='.get_server_information().';dbname='.get_database_name().'', ''.get_database_user_name().'', ''.get_database_user_password().'', 
+                      array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+                    }
+                    catch(PDOException $exception) {
+                      $_SESSION['cant_connect_to_database'] = true;
+                      $exception->getMessage();
+                    }
+
+
+                    echo "<table class=\"table table-hover mt-3\">";
+				    echo "<tr><th>Description</th><th>Start date</th><th>End date</th><th>Category</th><th>State</th></tr>";
+
+                    foreach($database_connection->query('select tasks_id, tasks_description, tasks_start_date, tasks_end_date, tasks_category, tasks_state from tasks
+                    where tasks_user_id = '.$_SESSION['active_user_id'].' and tasks_state = 3 order by tasks_end_date') as $row) {
+                        echo '<tr>';
+                        echo '<td>'.$row['tasks_description'].'</td>';
+                        echo '<td>'.date("d/m/Y", strtotime($row['tasks_start_date'])).'</td>';
+                        echo '<td>'.date("d/m/Y", strtotime($row['tasks_end_date'])).'</td>';
+
+                        if($row['tasks_category'] == 1) {
+                            echo '<td>Personal</td>';
+                        }
+                        else if($row['tasks_category'] == 2) {
+                            echo '<td>Work</td>';
+                        }
+
+                        if($row['tasks_state'] == 1) {
+                            echo '<td>To do</td>';
+                        }
+                        else if($row['tasks_state'] == 2) {
+                            echo '<td>In progress</td>';
+                        }
+
+                        echo '<td><a class="btn btn-primary" href="./edit_task.php" role="button">Edit task</a></td>';
+                        
+                        echo '</tr>';
+                    }
+
+                    echo "</table>";
+
+                    $database_connection = null;
+                ?>
             </div>
         </div>
     </main>
@@ -73,7 +122,7 @@
         <span class="text-muted">On <a href="https://github.com/ManelAC/Yet-another-task-manager">GitHub</a> by @ManelAC</span>
     </div>
     </footer>
-
+    
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->

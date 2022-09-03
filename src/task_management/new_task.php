@@ -79,8 +79,8 @@
         <div class="row">
             <div class="col-2">
                 <div class="row mt-3"><a class="btn btn-primary" href="./new_task.php" role="button" onClick="javascript: return confirm('Are you sure you want to leave this window without creating the task?');">New task</a></div>
-                <div class="row mt-3"><a class="btn btn-primary" href="./task_list.php" role="button" onClick="javascript: return confirm('Are you sure you want to leave this window without creating the task?');">Task list</a></div>
-                <div class="row mt-3"><a class="btn btn-primary" href="./done_tasks.php" role="button" onClick="javascript: return confirm('Are you sure you want to leave this window without creating the task?');">Done tasks</a></div>
+                <div class="row mt-3"><a class="btn btn-primary" href="./pending_tasks.php" role="button" onClick="javascript: return confirm('Are you sure you want to leave this window without creating the task?');">Pending tasks</a></div>
+                <div class="row mt-3"><a class="btn btn-primary" href="./finished_tasks.php" role="button" onClick="javascript: return confirm('Are you sure you want to leave this window without creating the task?');">Finished tasks</a></div>
                 <div class="row mt-3"><a class="btn btn-primary" href="./Dashboard.php" role="button" onClick="javascript: return confirm('Are you sure you want to leave this window without creating the task?');">Dashboard</a></div>
             </div>
             <div class="col-10">
@@ -141,23 +141,23 @@
                                             if($_SESSION['form_state'] == 1) {
                                                 echo '<option value="1" selected>To do</option>';
                                                 echo '<option value="2">In progress</option>';
-                                                echo '<option value="3">Done</option>';
+                                                echo '<option value="3">Finished</option>';
                                               }
                                               else if($_SESSION['form_state'] == 2) {
                                                 echo '<option value="1">To do</option>';
                                                 echo '<option value="2" selected>In progress</option>';
-                                                echo '<option value="3">Done</option>';
+                                                echo '<option value="3">Finished</option>';
                                               }
                                               else if($_SESSION['form_state'] == 3) {
                                                 echo '<option value="1">To do</option>';
                                                 echo '<option value="2">In progress</option>';
-                                                echo '<option value="3" selected>Done</option>';
+                                                echo '<option value="3" selected>Finished</option>';
                                               }
                                         }
                                         else {
                                             echo '<option value="1">To do</option>';
                                             echo '<option value="2">In progress</option>';
-                                            echo '<option value="3">Done</option>';
+                                            echo '<option value="3">Finished</option>';
                                         }
                                     ?>
                                 </select>
