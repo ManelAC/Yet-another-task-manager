@@ -53,33 +53,17 @@
 
     <!-- Begin page content -->
     <main role="main" class="container">
+        <h1 class="mt-5">Dashboard</h1>
+        <br>
         <div class="row">
-            <div class="col-12">
-                <h1 class="mt-5 text-center">Dashboard</h1>
-            </div>
-        </div>
-        <?php
-            if(isset($_SESSION['task_successfully_created'])) {
-                echo '<div class="alert alert-success" role="alert">The task was succesfully created.</div>';
-            }
-            $_SESSION['task_successfully_created'] = null;
-        ?>
-        <div class="row">
-            <div class="col-2">
-                <div class="row mt-3"><a class="btn btn-primary" href="./new_task.php" role="button">New task</a></div>
-                <div class="row mt-3"><a class="btn btn-primary" href="./task_list.php" role="button">Task list</a></div>
-                <div class="row mt-3"><a class="btn btn-primary" href="./done_tasks.php" role="button">Done tasks</a></div>
+            <div class="col-3">
+                <div class="row"><a class="btn btn-primary" href="./new_task.php" role="button">New task</a></div>
+                <div class="row"><a class="btn btn-primary" href="./task_list.php" role="button">Task list</a></div>
+                <div class="row"><a class="btn btn-primary" href="./done_tasks.php" role="button">Done tasks</a></div>
                 <div class="row mt-3"><a class="btn btn-primary" href="./Dashboard.php" role="button">Dashboard</a></div>
             </div>
-            <div class="col-10">
-                <div class="row mt-3"><h3>Some cool stats</h3></div>
-                <div class="row mb-5">Some cools stats graphs</div>
-                <hr>
-                <div class="row mt-3"><h3>Still pending tasks</h3></div>
-                <div class="row mb-5">Table</div>
-                <hr>
-                <div class="row mt-3"><h3>Next week tasks</h3></div>
-                <div class="row mb-5">Table</div>
+            <div class="col-9">
+                <div class="row"><h1 class="mt-5">Placeholder</h1></div>
             </div>
         </div>
     </main>

@@ -44,9 +44,9 @@
         }
         else {
             $_SESSION['active_user'] = $_POST['username'];
+            $_SESSION['active_user_id'] = get_id_from_user($_POST['username']);
 
             header("Location: ../task_management/dashboard.php");
         }
-
     }
 ?>

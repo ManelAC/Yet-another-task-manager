@@ -56,6 +56,12 @@
         <?php
             session_start();
 
+            if(isset($_SESSION["username_contains_whitespaces"])) {
+                echo '<div class="alert alert-danger" role="alert">The username can\'t contain whitespaces.</div>';
+            }
+            if(isset($_SESSION["username_contains_non_allowed_characters"])) {
+                echo '<div class="alert alert-danger" role="alert">The username can only contain the following characters: a-z, A-Z, 0-9</div>';
+            }
             if(isset($_SESSION["username_too_long"])) {
                 echo '<div class="alert alert-danger" role="alert">The username is too long. The maximum length is 100.</div>';
             }
@@ -64,6 +70,9 @@
             }
             if(isset($_SESSION["username_already_exists"])) {
                 echo '<div class="alert alert-danger" role="alert">The username is already in use. Pick a different one.</div>';
+            }
+            if(isset($_SESSION["mail_has_wrong_format"])) {
+                echo '<div class="alert alert-danger" role="alert">The email has a wrong format.</div>';
             }
             if(isset($_SESSION["email_already_in_use"])) {
                 echo '<div class="alert alert-danger" role="alert">The email is already in use. Pick a different one.</div>';
@@ -84,12 +93,12 @@
         <form action="./account_creation.php" method="post">
             <div class="form-group">
                 <label for="username">Username</label>
-                <input type="text" class="form-control" name="username" id="username" aria-describedby="username_help" placeholder="Enter username" required autocomplete="on">
+                <input type="text" class="form-control" name="username" id="username" aria-describedby="username_help" placeholder="Enter username" required autocomplete="on" value="<?php echo $_SESSION['correct_username'] ?>">
                 <small id="username_help" class="form-text text-muted">Username must be at least 3 characters long.</small>
             </div>
             <div class="form-group">
                 <label for="email">Email address</label>
-                <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Enter email" required autocomplete="on">
+                <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Enter email" required autocomplete="on" value="<?php echo $_SESSION['correct_mail'] ?>">
             </div>
             <div class="form-group">
                 <label for="password">Password</label>

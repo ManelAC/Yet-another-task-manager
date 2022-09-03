@@ -42,7 +42,6 @@
     else {
       return false;
     }
-
   }
 
   function is_email_already_in_use($email) {
@@ -72,7 +71,21 @@
     else {
       return false;
     }
-
   }
 
+  function get_id_from_user($username) {
+    try {
+      $database_connection = new PDO('mysql:host='.get_server_information().';dbname='.get_database_name().'', ''.get_database_user_name().'', ''.get_database_user_password().'', 
+      array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+    }
+    catch(PDOException $exception) {
+      $exception->getMessage();
+    }
+
+    foreach($database_connection->query('select * from users') as $row) {
+      if($row['users_username'] == $username){
+        return $row['users_id'];
+      }
+    }
+  }
 ?>
