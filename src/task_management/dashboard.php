@@ -16,10 +16,13 @@
 	<!-- Custom styles for this template -->
 	<link rel="stylesheet" href="https://getbootstrap.com/docs/4.1/examples/sticky-footer-navbar/sticky-footer-navbar.css">
 
+    <!-- CSS for charts -->
+    <link rel="stylesheet" href="https://unpkg.com/charts.css/dist/charts.min.css">
+
 </head>
 
 <?php
-	include './php_functions/php_functions.php';
+	include '../php_functions/php_functions.php';
 
     session_start();
 
@@ -89,14 +92,128 @@
                 <div class="row mt-3"><a class="btn btn-primary" href="./dashboard.php" role="button">Dashboard</a></div>
             </div>
             <div class="col-10">
-                <div class="row mt-3"><h3>Some cool stats</h3></div>
-                <div class="row mb-5">Some cools stats graphs</div>
+                <div class="row">
+                    <div class="col">
+                        <div class="row mt-3"><h3>Statistics</h3></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="row mb-5">Some cools stats graphs</div>
+                    </div>
+                    <div class="col">
+                        <div class="row mb-5">More cools stats graphs</div>
+                    </div>
+                </div>
                 <hr>
-                <div class="row mt-3"><h3>Still pending tasks</h3></div>
-                <div class="row mb-5">Table</div>
+                <div class="row mt-3"><h3>Backlog</h3></div>
+                <div class="row mb-5">
+                    <?php
+                        session_start();
+                    
+                        try {
+                        $database_connection = new PDO('mysql:host='.get_server_information().';dbname='.get_database_name().'', ''.get_database_user_name().'', ''.get_database_user_password().'', 
+                        array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+                        }
+                        catch(PDOException $exception) {
+                        $_SESSION['cant_connect_to_database'] = true;
+                        $exception->getMessage();
+                        }
+
+
+                        echo "<table class=\"table table-hover mt-3\">";
+                        echo "<tr><th>Description</th><th>Start date</th><th>End date</th><th>Category</th><th>State</th></tr>";
+
+                        foreach($database_connection->query('select tasks_id, tasks_description, tasks_start_date, tasks_end_date, tasks_category, tasks_state from tasks
+                        where tasks_user_id = '.$_SESSION['active_user_id'].' and tasks_state < 3 order by tasks_end_date') as $row) {
+
+                            $current_date = strtotime(date("Y-m-d"));
+                            $row_date = strtotime($row['tasks_end_date']);
+
+                            if($row_date <= $current_date) {
+                                echo '<tr>';
+                                echo '<td>'.$row['tasks_description'].'</td>';
+                                echo '<td>'.date("d/m/Y", strtotime($row['tasks_start_date'])).'</td>';
+                                echo '<td>'.date("d/m/Y", strtotime($row['tasks_end_date'])).'</td>';
+
+                                if($row['tasks_category'] == 1) {
+                                    echo '<td>Personal</td>';
+                                }
+                                else if($row['tasks_category'] == 2) {
+                                    echo '<td>Work</td>';
+                                }
+
+                                if($row['tasks_state'] == 1) {
+                                    echo '<td>To do</td>';
+                                }
+                                else if($row['tasks_state'] == 2) {
+                                    echo '<td>In progress</td>';
+                                }
+
+                                echo '<td><a class="btn btn-primary" href="./edit_task.php?id='.$row['tasks_id'].'" role="button">Edit task</a></td>';
+                                
+                                echo '</tr>';
+                            }
+                        }
+
+                        echo "</table>";
+                    ?>
+                </div>
                 <hr>
-                <div class="row mt-3"><h3>Next week tasks</h3></div>
-                <div class="row mb-5">Table</div>
+                <div class="row mt-3"><h3>Tasks for the next 7 days</h3></div>
+                <div class="row mb-5">
+                    <?php
+                        session_start();
+                    
+                        try {
+                        $database_connection = new PDO('mysql:host='.get_server_information().';dbname='.get_database_name().'', ''.get_database_user_name().'', ''.get_database_user_password().'', 
+                        array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+                        }
+                        catch(PDOException $exception) {
+                        $_SESSION['cant_connect_to_database'] = true;
+                        $exception->getMessage();
+                        }
+
+
+                        echo "<table class=\"table table-hover mt-3\">";
+                        echo "<tr><th>Description</th><th>Start date</th><th>End date</th><th>Category</th><th>State</th></tr>";
+
+                        foreach($database_connection->query('select tasks_id, tasks_description, tasks_start_date, tasks_end_date, tasks_category, tasks_state from tasks
+                        where tasks_user_id = '.$_SESSION['active_user_id'].' and tasks_state < 3 order by tasks_end_date') as $row) {
+
+                            $current_date = strtotime(date("Y-m-d"));
+                            $row_date = strtotime($row['tasks_end_date']);
+                            $one_week_date = $current_date + (60 * 60 * 24 * 7);
+
+                            if(($row_date >= $current_date) && ($row_date <= $one_week_date)) {
+                                echo '<tr>';
+                                echo '<td>'.$row['tasks_description'].'</td>';
+                                echo '<td>'.date("d/m/Y", strtotime($row['tasks_start_date'])).'</td>';
+                                echo '<td>'.date("d/m/Y", strtotime($row['tasks_end_date'])).'</td>';
+
+                                if($row['tasks_category'] == 1) {
+                                    echo '<td>Personal</td>';
+                                }
+                                else if($row['tasks_category'] == 2) {
+                                    echo '<td>Work</td>';
+                                }
+
+                                if($row['tasks_state'] == 1) {
+                                    echo '<td>To do</td>';
+                                }
+                                else if($row['tasks_state'] == 2) {
+                                    echo '<td>In progress</td>';
+                                }
+
+                                echo '<td><a class="btn btn-primary" href="./edit_task.php?id='.$row['tasks_id'].'" role="button">Edit task</a></td>';
+                                
+                                echo '</tr>';
+                            }
+                        }
+
+                        echo "</table>";
+                    ?>
+                </div>
             </div>
         </div>
     </main>

@@ -5,6 +5,8 @@
 The Bootstrap functionality has been extracted from here:
 https://getbootstrap.com/docs/4.1/examples/sticky-footer-navbar/
 
+The charts from the dashboard come from here:
+https://chartscss.org/
 
 Icons used:
 - <a href="https://www.flaticon.com/free-icons/user" title="user icons">User icons created by kmg design - Flaticon</a>

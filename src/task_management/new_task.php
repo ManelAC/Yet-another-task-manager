@@ -19,7 +19,7 @@
 </head>
 
 <?php
-	include './php_functions/php_functions.php';
+	include '../php_functions/php_functions.php';
 
     session_start();
 
