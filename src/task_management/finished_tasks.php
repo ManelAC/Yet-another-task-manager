@@ -104,7 +104,7 @@
                             echo '<td>In progress</td>';
                         }
 
-                        echo '<td><a class="btn btn-primary" href="./edit_task.php" role="button">Edit task</a></td>';
+                        echo '<td><a class="btn btn-primary" href="./edit_task.php?id='.$row['tasks_id'].'" role="button">Edit task</a></td>';
                         
                         echo '</tr>';
                     }

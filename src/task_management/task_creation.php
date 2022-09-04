@@ -25,13 +25,13 @@
     else {
         $_SESSION['description_too_short'] = null;
     }
-
-    if(does_user_already_exist($_POST['username'])) {
-        $_SESSION['username_already_exists'] = true;
+    
+    if(strlen($_POST["explanation"]) > 2000) {
+        $_SESSION['detailed_description_too_long'] = true;
         $can_create_task = false;
     }
-    else {
-        $_SESSION['username_already_exists'] = null;
+    else{
+        $_SESSION['detailed_description_too_long'] = null;
     }
 
     if($_POST['start_date'] > $_POST['end_date']) {

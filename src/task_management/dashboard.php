@@ -63,6 +63,11 @@
                 echo '<div class="alert alert-success" role="alert">The task was succesfully created.</div>';
             }
             $_SESSION['task_successfully_created'] = null;
+
+            if(isset($_SESSION['not_allowed_to_edit'])) {
+                echo '<div class="alert alert-danger" role="alert">You are not authorised to edit that task!</div>';
+            }
+            $_SESSION['not_allowed_to_edit'] = null;
         ?>
         <div class="row">
             <div class="col-2">
