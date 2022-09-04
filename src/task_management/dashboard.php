@@ -97,12 +97,95 @@
                         <div class="row mt-3"><h3>Statistics</h3></div>
                     </div>
                 </div>
+                <?php
+                        session_start();
+                    
+                        try {
+                        $database_connection = new PDO('mysql:host='.get_server_information().';dbname='.get_database_name().'', ''.get_database_user_name().'', ''.get_database_user_password().'', 
+                        array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+                        }
+                        catch(PDOException $exception) {
+                        $_SESSION['cant_connect_to_database'] = true;
+                        $exception->getMessage();
+                        }
+
+                        $counter_personal = 0;
+                        $counter_work = 0;
+                        $counter_to_do = 0;
+                        $counter_in_progress = 0;
+                        $counter_finished = 0;
+
+                        foreach($database_connection->query('select tasks_category, tasks_state from tasks where tasks_user_id = '.$_SESSION['active_user_id'].'') as $row) {
+                            if($row['tasks_category'] == 1){
+                                $counter_personal++;
+                            }
+                            else{
+                                $counter_work++;
+                            }
+                            if($row['tasks_state'] == 1){
+                                $counter_to_do++;
+                            }
+                            else if($row['tasks_state'] == 2){
+                                $counter_in_progress++;
+                            }
+                            else{
+                                $counter_finished++;
+                            }
+
+                        }
+
+                        $total_category = $counter_personal + $counter_work;
+                        $total_state = $counter_to_do + $counter_in_progress + $counter_finished;
+                ?>
+
                 <div class="row">
                     <div class="col">
-                        <div class="row mb-5">Some cools stats graphs</div>
+                        <div class="row mb-5 pr-2" style="height: 200px;">
+                            <table class="charts-css column show-heading show-data-on-hover show-primary-axis show-labels">
+                                <caption>Category</caption>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">Personal</th>
+                                        <?php
+                                            echo '<td style="--size: calc('.$counter_personal.' / '.$total_category.');"><span class="data">'.$counter_personal.'</span></td>';
+                                        ?>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Work</th>
+                                        <?php
+                                            echo '<td style="--size: calc('.$counter_work.' / '.$total_category.');"><span class="data">'.$counter_work.'</span></td>';
+                                        ?>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     <div class="col">
-                        <div class="row mb-5">More cools stats graphs</div>
+                        <div class="row mb-5 pl-2" style="height: 200px;">
+                            <table class="charts-css column show-heading show-data-on-hover show-primary-axis show-labels">
+                                <caption>State</caption>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">To do</th>
+                                        <?php
+                                            echo '<td style="--size: calc('.$counter_to_do.' / '.$total_state.');"><span class="data">'.$counter_to_do.'</span></td>';
+                                        ?>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">In progress</th>
+                                        <?php
+                                            echo '<td style="--size: calc('.$counter_in_progress.' / '.$total_state.');"><span class="data">'.$counter_in_progress.'</span></td>';
+                                        ?>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Finished</th>
+                                        <?php
+                                            echo '<td style="--size: calc('.$counter_finished.' / '.$total_state.');"><span class="data">'.$counter_finished.'</span></td>';
+                                        ?>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
                 <hr>
