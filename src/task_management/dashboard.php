@@ -26,6 +26,8 @@
     if(!isset($_SESSION['active_user'])) {
         header("Location: ../index.php");
     }
+
+    $_SESSION['entry_to_delete'] = null;
 ?>
 
 <body>
@@ -61,20 +63,30 @@
         <?php
             if(isset($_SESSION['task_successfully_created'])) {
                 echo '<div class="alert alert-success" role="alert">The task was succesfully created.</div>';
+                $_SESSION['task_successfully_created'] = null;
             }
-            $_SESSION['task_successfully_created'] = null;
 
             if(isset($_SESSION['not_allowed_to_edit'])) {
                 echo '<div class="alert alert-danger" role="alert">You are not authorised to edit that task!</div>';
+                $_SESSION['not_allowed_to_edit'] = null;
             }
-            $_SESSION['not_allowed_to_edit'] = null;
+            
+            if(isset($_SESSION['not_allowed_to_delete'])) {
+                echo '<div class="alert alert-danger" role="alert">You are not authorised to delete that task!</div>';
+                $_SESSION['not_allowed_to_delete'] = null;
+            }
+            
+            if(isset($_SESSION['task_successfully_deleted'])) {
+                echo '<div class="alert alert-success" role="alert">The task has been deleted.</div>';
+                $_SESSION['not_allowed_to_delete'] = null;
+            }
         ?>
         <div class="row">
             <div class="col-2">
                 <div class="row mt-3"><a class="btn btn-primary" href="./new_task.php" role="button">New task</a></div>
                 <div class="row mt-3"><a class="btn btn-primary" href="./pending_tasks.php" role="button">Pending tasks</a></div>
                 <div class="row mt-3"><a class="btn btn-primary" href="./finished_tasks.php" role="button">Finished tasks</a></div>
-                <div class="row mt-3"><a class="btn btn-primary" href="./Dashboard.php" role="button">Dashboard</a></div>
+                <div class="row mt-3"><a class="btn btn-primary" href="./dashboard.php" role="button">Dashboard</a></div>
             </div>
             <div class="col-10">
                 <div class="row mt-3"><h3>Some cool stats</h3></div>

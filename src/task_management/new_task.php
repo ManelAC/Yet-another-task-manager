@@ -26,6 +26,8 @@
     if(!isset($_SESSION['active_user'])) {
         header("Location: ../index.php");
     }
+
+    $_SESSION['entry_to_delete'] = null;
 ?>
 
 <body>
@@ -81,7 +83,7 @@
                 <div class="row mt-3"><a class="btn btn-primary" href="./new_task.php" role="button" onClick="javascript: return confirm('Are you sure you want to leave this window without creating the task?');">New task</a></div>
                 <div class="row mt-3"><a class="btn btn-primary" href="./pending_tasks.php" role="button" onClick="javascript: return confirm('Are you sure you want to leave this window without creating the task?');">Pending tasks</a></div>
                 <div class="row mt-3"><a class="btn btn-primary" href="./finished_tasks.php" role="button" onClick="javascript: return confirm('Are you sure you want to leave this window without creating the task?');">Finished tasks</a></div>
-                <div class="row mt-3"><a class="btn btn-primary" href="./Dashboard.php" role="button" onClick="javascript: return confirm('Are you sure you want to leave this window without creating the task?');">Dashboard</a></div>
+                <div class="row mt-3"><a class="btn btn-primary" href="./dashboard.php" role="button" onClick="javascript: return confirm('Are you sure you want to leave this window without creating the task?');">Dashboard</a></div>
             </div>
             <div class="col-10">
                 <form action="./task_creation.php" method="post">

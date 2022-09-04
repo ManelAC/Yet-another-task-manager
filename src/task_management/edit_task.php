@@ -32,6 +32,8 @@
         $exception->getMessage();
       }
 
+    $_SESSION['entry_to_delete'] = $_GET['id'];
+
     foreach($database_connection->query('select * from tasks') as $temp_row) {
         if($temp_row['tasks_id'] == $_GET['id']) {
             if($temp_row['tasks_user_id'] != $_SESSION['active_user_id']) {
@@ -102,7 +104,7 @@
                 <div class="row mt-3"><a class="btn btn-primary" href="./new_task.php" role="button" onClick="javascript: return confirm('Are you sure you want to leave this window without editing the task?');">New task</a></div>
                 <div class="row mt-3"><a class="btn btn-primary" href="./pending_tasks.php" role="button" onClick="javascript: return confirm('Are you sure you want to leave this window without editing the task?');">Pending tasks</a></div>
                 <div class="row mt-3"><a class="btn btn-primary" href="./finished_tasks.php" role="button" onClick="javascript: return confirm('Are you sure you want to leave this window without editing the task?');">Finished tasks</a></div>
-                <div class="row mt-3"><a class="btn btn-primary" href="./Dashboard.php" role="button" onClick="javascript: return confirm('Are you sure you want to leave this window without editing the task?');">Dashboard</a></div>
+                <div class="row mt-3"><a class="btn btn-primary" href="./dashboard.php" role="button" onClick="javascript: return confirm('Are you sure you want to leave this window without editing the task?');">Dashboard</a></div>
             </div>
             <div class="col-10">
                 <form action="./task_edition.php" method="post">
@@ -184,8 +186,7 @@
                     <input type="hidden" id="task_id" name="task_id" value="<?php echo $row['tasks_id'] ?>">
                     <div class="row">
                         <div class="col text-left">
-                            <button type="submit" class="btn btn-danger">Delete task</button>
-                            
+                            <a class="btn btn-danger" href="./task_deletion.php" role="button" onClick="javascript: return confirm('Are you sure you want to delete this task? You won\'t be able to recover it afterwards!');">Delete task</a>
                         </div>
                         <div class="col text-right">
                             <button type="submit" class="btn btn-primary">Edit task</button>

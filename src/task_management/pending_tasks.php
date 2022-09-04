@@ -26,6 +26,8 @@
     if(!isset($_SESSION['active_user'])) {
         header("Location: ../index.php");
     }
+
+    $_SESSION['entry_to_delete'] = null;
 ?>
 
 <body>
@@ -63,7 +65,7 @@
                 <div class="row mt-3"><a class="btn btn-primary" href="./new_task.php" role="button">New task</a></div>
                 <div class="row mt-3"><a class="btn btn-primary" href="./pending_tasks.php" role="button">Pending tasks</a></div>
                 <div class="row mt-3"><a class="btn btn-primary" href="./finished_tasks.php" role="button">Finished tasks</a></div>
-                <div class="row mt-3"><a class="btn btn-primary" href="./Dashboard.php" role="button">Dashboard</a></div>
+                <div class="row mt-3"><a class="btn btn-primary" href="./dashboard.php" role="button">Dashboard</a></div>
             </div>
             <div class="col-10">
                 <?php

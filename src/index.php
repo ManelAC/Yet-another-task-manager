@@ -22,6 +22,8 @@
 	include './php_functions/php_functions.php';
 
     session_start();
+
+    $_SESSION['entry_to_delete'] = null;
 ?>
 
 <body>

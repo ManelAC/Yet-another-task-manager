@@ -4,11 +4,11 @@
     session_start();
 
     if(!isset($_SESSION['active_user'])) {
-        header("Location: ../task_management/dashboard.php");
+        header("Location: ../index.php");
     }
 
     if(!isset($_POST['task_id'])) {
-        header("Location: ../index.php");
+        header("Location: ./dashboard.php");
     }
 
     try {
